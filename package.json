@@ -24,5 +24,5 @@
   "homepage": "https://github.com/IanGlass/Budgetty#readme",
   "engines": {
     "node": "10.x"
-  },
+  }
 }
