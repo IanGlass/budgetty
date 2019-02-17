@@ -1,0 +1,19 @@
+{
+  "name": "budgetty",
+  "version": "1.0.0",
+  "description": "Budgetting app",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IanGlass/Budgetty.git"
+  },
+  "author": "Ian Glass",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IanGlass/Budgetty/issues"
+  },
+  "homepage": "https://github.com/IanGlass/Budgetty#readme"
+}
