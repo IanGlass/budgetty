@@ -4,6 +4,7 @@
   "description": "Budgetting app",
   "main": "source/index.html",
   "scripts": {
+    "start": "npm run source/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/IanGlass/Budgetty/issues"
   },
-  "homepage": "https://github.com/IanGlass/Budgetty#readme"
+  "homepage": "https://github.com/IanGlass/Budgetty#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "gulp": "^4.0.0",
+    "http-server": "^0.11.1"
+  },
+  "postinstall": "gulp build"
 }
