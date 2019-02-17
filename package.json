@@ -2,7 +2,7 @@
   "name": "budgetty",
   "version": "1.0.0",
   "description": "",
-  "main": "index.php",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.16.4",
     "heroku": "^7.21.0"
