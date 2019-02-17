@@ -1,6 +1,10 @@
-var express = require('express');
-var app = express();
-app.use(express.static(__dirname + '/public')); //__dir and not _dir
-var port = 8000; // you can use any port
-app.listen(port);
-console.log('server on' + port);
+const express = require('express')
+const path = require('path')
+const PORT = process.env.PORT || 5000
+
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))

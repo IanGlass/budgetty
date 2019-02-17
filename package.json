@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/IanGlass/Budgetty/issues"
   },
-  "homepage": "https://github.com/IanGlass/Budgetty#readme"
+  "homepage": "https://github.com/IanGlass/Budgetty#readme",
+  "engines": {
+    "node": "10.x"
+  },
 }
