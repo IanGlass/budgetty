@@ -7,7 +7,6 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "heroku": "^7.21.0",
-    "ion": "^1.0.1",
     "ionicons": "^4.5.5"
   },
   "devDependencies": {},
