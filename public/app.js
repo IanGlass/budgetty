@@ -123,8 +123,17 @@ var UIController = (function() {
         budgetExpenses: '.budget__expenses--value',
         budgetExpensesPercentage: '.budget__expenses--percentage',
         container: '.container',
-        expensesPercLabel: '.item__percentage'
+        expensesPercLabel: '.item__percentage',
+        monthLabel: '.budget__title--month',
+        inputType: '.add__type'
     }
+
+    var displayMonth = function() {
+        months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        date = new Date();
+        document.querySelector(DOMStrings.monthLabel).textContent = months[date.getMonth()] + ' ' + date.getFullYear();
+    };
+    displayMonth();
 
     // Clears the input fields after it has been added to the DOM table
     var clearFields = function() {
@@ -139,6 +148,12 @@ var UIController = (function() {
         });
 
         fieldsArr[0].focus();
+    }
+
+    var nodeListForEach = function(list, callback) {
+        for (var i = 0; i < list.length; i++) {
+            callback(list[i], i);
+        }
     }
 
     return {
@@ -181,14 +196,22 @@ var UIController = (function() {
         },
         displayPercentages: function(percentages) {
             var fields = document.querySelectorAll(DOMStrings.expensesPercLabel);
-            var nodeListForEach = function(list, callback) {
-                for (var i = 0; i < list.length; i++) {
-                    callback(list[i], i);
-                }
-            }
             nodeListForEach(fields, function(current, index) {
                 current.textContent = percentages[index] + '%';
             });
+        },
+        changedType: function() {
+            var fields = document.querySelectorAll(
+                DOMStrings.inputType +',' +
+                DOMStrings.inputDescription + ',' +
+                DOMStrings.inputValue
+            );
+
+            nodeListForEach(fields, function(cur) {
+                cur.classList.toggle('red-focus');
+            });
+
+            document.querySelector(DOMStrings.addButton).classList.toggle('red');
         }
     };
 
@@ -208,6 +231,8 @@ var Controller = (function(budgetCtrl, UICtrl) {
         });
 
         document.querySelector(UICtrl.DOMStrings.container).addEventListener('click', ctrlDeleteItem);
+
+        document.querySelector(UICtrl.DOMStrings.inputType).addEventListener('change', UICtrl.changedType);
     };
 
     // Calculate and update budget
