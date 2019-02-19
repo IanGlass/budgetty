@@ -122,7 +122,8 @@ var UIController = (function() {
         budgetIncome: '.budget__income--value',
         budgetExpenses: '.budget__expenses--value',
         budgetExpensesPercentage: '.budget__expenses--percentage',
-        container: '.container'
+        container: '.container',
+        expensesPercLabel: '.item__percentage'
     }
 
     // Clears the input fields after it has been added to the DOM table
@@ -177,6 +178,17 @@ var UIController = (function() {
             document.querySelector(DOMStrings.budgetIncome).textContent = '+ ' +  obj.income;
             document.querySelector(DOMStrings.budgetExpenses).textContent = '- ' +  obj.expenses;
             document.querySelector(DOMStrings.budgetExpensesPercentage).textContent = obj.percentage + '%';
+        },
+        displayPercentages: function(percentages) {
+            var fields = document.querySelectorAll(DOMStrings.expensesPercLabel);
+            var nodeListForEach = function(list, callback) {
+                for (var i = 0; i < list.length; i++) {
+                    callback(list[i], i);
+                }
+            }
+            nodeListForEach(fields, function(current, index) {
+                current.textContent = percentages[index] + '%';
+            });
         }
     };
 
@@ -208,7 +220,7 @@ var Controller = (function(budgetCtrl, UICtrl) {
     var updatePercentages = function() {
         budgetCtrl.calculatePercentages();
         var percentages = budgetCtrl.getPercentages();
-        console.log(percentages);
+        UICtrl.displayPercentages(percentages);
     }
     
     var ctrlAddItem = function() {
