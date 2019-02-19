@@ -165,7 +165,7 @@ var UIController = (function() {
             // Populate html with respective data
             newHtml = html.replace('%id%', obj.id);
             newHtml = newHtml.replace('%description%', obj.description);
-            newHtml = newHtml.replace('%value%', obj.value);
+            newHtml = newHtml.replace('%value%', obj.value.toFixed(2).toLocaleString());
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
             clearFields();
