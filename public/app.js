@@ -2,8 +2,6 @@
 //Each of the returned methods have access to methods within their respective IFFEs but outer modules do not
 
 
-
-
 var budgetController = (function() {
 
     var Expense = function(id, description, value) {
@@ -180,7 +178,7 @@ var UIController = (function() {
             // Populate html with respective data
             newHtml = html.replace('%id%', obj.id);
             newHtml = newHtml.replace('%description%', obj.description);
-            newHtml = newHtml.replace('%value%', obj.value.toFixed(2).toLocaleString());
+            newHtml = newHtml.replace('%value%', Number(obj.value.toFixed(2)).toLocaleString());
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
             clearFields();
@@ -189,9 +187,9 @@ var UIController = (function() {
             document.getElementById(id).remove();
         },
         displayBudget: function(obj) {
-            document.querySelector(DOMStrings.budgetValue).textContent = obj.budget;
-            document.querySelector(DOMStrings.budgetIncome).textContent = '+ ' +  obj.income;
-            document.querySelector(DOMStrings.budgetExpenses).textContent = '- ' +  obj.expenses;
+            document.querySelector(DOMStrings.budgetValue).textContent = Number(obj.budget.toFixed(2)).toLocaleString();
+            document.querySelector(DOMStrings.budgetIncome).textContent = '+ ' +  Number(obj.income.toFixed(2)).toLocaleString();
+            document.querySelector(DOMStrings.budgetExpenses).textContent = '- ' +  Number(obj.expenses.toFixed(2)).toLocaleString();
             document.querySelector(DOMStrings.budgetExpensesPercentage).textContent = obj.percentage + '%';
         },
         displayPercentages: function(percentages) {
@@ -218,7 +216,7 @@ var UIController = (function() {
 })();
 
  // Global app controller
-var Controller = (function(budgetCtrl, UICtrl) {
+ var Controller = (function(budgetCtrl, UICtrl) {
 
     var setupEventListeners = function() {
         document.querySelector(UICtrl.DOMStrings.addButton).addEventListener('click', ctrlAddItem);
