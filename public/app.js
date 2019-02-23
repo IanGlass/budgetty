@@ -178,7 +178,7 @@ var UIController = (function() {
             // Populate html with respective data
             newHtml = html.replace('%id%', obj.id);
             newHtml = newHtml.replace('%description%', obj.description);
-            newHtml = newHtml.replace('%value%', Number(obj.value.toFixed(2)).toLocaleString());
+            newHtml = newHtml.replace('%value%', obj.value.toLocaleString('en', { minimumFractionDigits: 2 }));
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
             clearFields();
@@ -187,9 +187,9 @@ var UIController = (function() {
             document.getElementById(id).remove();
         },
         displayBudget: function(obj) {
-            document.querySelector(DOMStrings.budgetValue).textContent = Number(obj.budget.toFixed(2)).toLocaleString();
-            document.querySelector(DOMStrings.budgetIncome).textContent = '+ ' +  Number(obj.income.toFixed(2)).toLocaleString();
-            document.querySelector(DOMStrings.budgetExpenses).textContent = '- ' +  Number(obj.expenses.toFixed(2)).toLocaleString();
+            document.querySelector(DOMStrings.budgetValue).textContent = obj.budget.toLocaleString('en', { minimumFractionDigits: 2 });
+            document.querySelector(DOMStrings.budgetIncome).textContent = '+ ' +  obj.income.toLocaleString('en', { minimumFractionDigits: 2 });
+            document.querySelector(DOMStrings.budgetExpenses).textContent = '- ' +  obj.expenses.toLocaleString('en', { minimumFractionDigits: 2 });
             document.querySelector(DOMStrings.budgetExpensesPercentage).textContent = obj.percentage + '%';
         },
         displayPercentages: function(percentages) {
