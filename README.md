@@ -125,7 +125,7 @@ However, expense items have an additional element ```item__percentage``` which s
 
 
 #### Budget Controller
-
+The budget controller contains three data storage structures to keep internal record of the current data. Expense and income function constructors provide a means to dynamically expand and contract the current number of list items. These structures contain an id, item description and a value, however the ```Expense``` constructor also contains a prototype function to calculate its percentage and store it internally. Expense and income items are stored within respective arrays in ```data.allItems```, with the total income and expense stored in ```totals``` and the remaining budget and total expense percentage stored in ```data.budget``` and ```data.percentage``` respectively.
 ```javascript
 var budgetController = (function() {
 
@@ -163,7 +163,11 @@ var budgetController = (function() {
         // Percentage of expenses vs income
         percentage: 0,
     }
+```
 
+
+
+```javascript
     var calculateTotal = function(type) {
         var sum = 0;
         data.allItems[type].forEach(function(element) {
