@@ -8,8 +8,9 @@ Budgetty is a budgetting app which takes a series of incomes and expenses and ca
 
 This app is written in ES5 using the module pattern where objects are hidden from the global scope using IFFEs. Modules are exposed to other modules by passing them as arguments during the IFFE declaration. Closures are leveraged to create private methods only available in their parent objects.
 
+<p align="center">
 https://budgetty.herokuapp.com/
-
+</p>
 
 
 #### HTML
