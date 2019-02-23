@@ -62,7 +62,18 @@ The board is broken into two main divs, top and bottom, which contain the budget
 
 
 
- 
+The bottom element is split into two containers. The input container ```add__container```, contains:
+* The input type selector ```add__type```
+* The input description ```add__description```
+* The input value ```add__value```
+
+It also contains the list container ```container clearfix```, which stores the individual incomes as a list item ```income__list``` and the individual expenses as a list item ```expenses__list```. Each list item (dynamically added in code) ```item clearfix``` contains:
+* A description ```item__description```
+* A value ```item__value```
+* A button to remove the respective list item ```item__delete```
+
+However, expense items have an additional element ```item__percentage``` which stores the item expense percentage as a function of the total income
+
 ```html     
         <div class="bottom">
             <div class="add">
