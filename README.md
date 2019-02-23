@@ -15,7 +15,9 @@ This app is written in ES5 using the module pattern where objects are hidden fro
 
 
 #### HTML
-The board is broken into two main divs, top and bottom, which contain the budget totals, and income and expenses lists respectively. 
+The board is broken into two main divs, top and bottom, which contain the budget totals, and income and expenses lists respectively. Within top, there are four elements:
+* The title, containing the current month
+* The total remaining budget ```htmlbudget__value```
 
 ```html
 <!DOCTYPE html>
