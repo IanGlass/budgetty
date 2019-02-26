@@ -167,11 +167,11 @@ var budgetController = (function() {
 ```
 
 The ```budget controller``` exposes five public methods which are used by the ```controller```:
-* ```addItem``` - Adds new expense or income items to the respective data storage structure. A list item id is first generated using the total length of the respective income or expense list. 
-* ``calculateBudget``` - 
-* ```calculatePercentages``` - 
-* ```getPercentages``` - 
-* ```deleteData``` - 
+* ```addItem``` - Adds new expense or income items to the respective data storage structure. A list item id is first generated using the total length of the respective income or expense list. Items are then pushed into their respective lists using the ```type``` variable.
+* ```calculateBudget``` - Calculates the total income, expense, budget and expense as a percentage of the income and returns these parameters as an object to be used by the ```controller```
+* ```calculatePercentages``` - Uses the total income to calculate the respective percentages of each expense in the item list. This is used by the ```controller``` whenever a list item is added or removed.
+* ```getPercentages``` - Returns a array of all the expense percentages in the item list.
+* ```deleteData``` - Removes a particular list item by id.
 
 
 ```javascript
@@ -328,7 +328,11 @@ var UIController = (function() {
             callback(list[i], i);
         }
     }
+```
 
+
+
+```javascript
     return {
         // Expose DOMStrings to calling modules
         DOMStrings: DOMStrings,
