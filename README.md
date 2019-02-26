@@ -436,7 +436,11 @@ The ```UIController``` returns 7 objects for use by the ```controller```:
 
 
 
-
+The ```controller``` is the master controller of the app and co-ordinates communication between the ```budgetController``` and the ```UIController```. The ```controller``` has 5 closures:
+* ```setupEventListeners``` - Constructs the event listeners for the entire program. Attaches the ```ctrlAddItem``` method to the button and return key event listeners.
+* ```updateBudget``` - Calculates the percentages of each expense item in the item list using the ```budgetCtrl.calculatePercentages``` method. Then retrieves the updated percentages as a string and passes it to ```UICtrl.displayPercentages(percentages)``` to update the UI list.
+* ```ctrlAddItem``` - Attached to the button and return key event listener. Grabs the DOM inputs using ```UICtrl.getInput```, ensures the values are not empty or zero, adds the item to the data structure using ```budgetCtrl.addItem```, adds the item to the DOM list using ```UICtrl.addListItem``` and updates the budget and expense list percentages.
+* ```ctrlDeleteItem``` - Attached to the ```container``` 'click' event listener. This method removes the list item that was clicked by deleting the list item from the data structure using ```budgetController.deleteData```, updates the total budgets using ```updateBudget```, removes the list item from the DOM using ```UIController.deleteListItem``` and updates the percentages of individual expenses in the item list using ```updatePercentages```.
 
 #### App controller
 
