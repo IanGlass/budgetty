@@ -272,7 +272,7 @@ The ```budget controller``` exposes five public methods which are used by the ``
 
 
 #### UI Controller
-
+The UI controller controls all aspects associated with interacting with the UI, changing or updating displayed values, or reading display values. An object, ```DOMStrings```, is used to store all the important class names of the DOM. the ```displayMonth``` closure is used to update the month displayed on the UI upon startup.
 ```javascript
 var UIController = (function() {
 
