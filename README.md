@@ -164,7 +164,17 @@ var budgetController = (function() {
         // Percentage of expenses vs income
         percentage: 0,
     }
+```
 
+The ```budget controller``` exposes five public methods which are used by the ```controller```:
+* ```addItem``` - Adds new expense or income items to the respective data storage structure. A list item id is first generated using the total length of the respective income or expense list. 
+* ``calculateBudget``` - 
+* ```calculatePercentages``` - 
+* ```getPercentages``` - 
+* ```deleteData``` - 
+
+
+```javascript
     /** Closure which calculates the total income or expense.
      * @param {string} 'inc' or 'exp' depending on calculation type.
      */

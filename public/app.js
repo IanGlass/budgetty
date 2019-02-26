@@ -71,6 +71,7 @@ var budgetController = (function() {
                 return data.allItems.inc[data.allItems.inc.length - 1];
             }
         },
+
         /** Updates all the budget totals data structures. 
          * @return {object} Object containing the updated totals.
          */
@@ -94,6 +95,7 @@ var budgetController = (function() {
                 percentage: data.percentage,
             }
         },
+
         /** Iterates through the expenses list and calculates their respective percentages.
          */
         calculatePercentages: function() {
@@ -101,6 +103,7 @@ var budgetController = (function() {
                 item.calcPercentage(data.totals.inc);
             });
         },
+
         /** Collates a list of all the percentages in the expenses list.
          * @return {array} Array of percentages for the expenses list.
          */
@@ -110,6 +113,7 @@ var budgetController = (function() {
             });
             return allPercentages;
         },
+
         /** Removes an item from the expenses or income list based on its id.
          * @param {string} type 'inc' or 'exp' depending on calculation type.
          * @param {string} id The id of the list item to remove.
@@ -144,6 +148,7 @@ var UIController = (function() {
         monthLabel: '.budget__title--month',
         inputType: '.add__type'
     }
+
     /** Finds and adds the current month to the UI.
      */
     var displayMonth = function() {
@@ -182,6 +187,7 @@ var UIController = (function() {
     return {
         // Expose DOMStrings to calling modules
         DOMStrings: DOMStrings,
+
         /** Returns the values entered into the input panel.
          * @return {object} Object containing the input type, description and value.
          */
@@ -193,6 +199,7 @@ var UIController = (function() {
                 value: parseFloat(document.querySelector(DOMStrings.inputValue).value)
             };
         },
+
         /** Adds a new list item to the DOM.
          * @param {object} obj Object containing the item id, description and value to be displayed.
          * @param {string} type 'inc' or 'exp' depending on calculation type.
@@ -215,12 +222,14 @@ var UIController = (function() {
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
             clearFields();
         },
+
         /** Adds a new list item to the DOM.
          * @param {string} id The id of the list item to remove from the DOM
          */
         deleteListItem: function(id) {
             document.getElementById(id).remove();
         },
+
         /** Updates the budget totals on the DOM.
          * @param {object} obj Object containing the total budget, income, expense and expense percentage.
          */
@@ -230,6 +239,7 @@ var UIController = (function() {
             document.querySelector(DOMStrings.budgetExpenses).textContent = '- ' +  obj.expenses.toLocaleString('en', { minimumFractionDigits: 2 });
             document.querySelector(DOMStrings.budgetExpensesPercentage).textContent = obj.percentage + '%';
         },
+
         /** Updates the percentages for each expense list item.
          * @param {array} percentages A list of all the expense percentages.
          */
@@ -239,6 +249,7 @@ var UIController = (function() {
                 current.textContent = percentages[index] + '%';
             });
         },
+
         /** Toggles the colour of the input UI when the input type is changed. This function is attached to an event listener.
          */
         changedType: function() {
@@ -277,7 +288,6 @@ var UIController = (function() {
         document.querySelector(UICtrl.DOMStrings.inputType).addEventListener('change', UICtrl.changedType);
     };
 
-    // Calculate and update budget
     /** Triggers the budget controller to calculate the total budgets and triggers the UI controller to update UI with new budgets.
      */
     var updateBudget = function() {
@@ -285,12 +295,7 @@ var UIController = (function() {
         UICtrl.displayBudget(budgetData);
     }
 
-    // Updates the percentages of individual expenses whenever something is added or removed
-    /** Adds new expense or income items to the respective data storage structure.
-     * @param {string} type 'inc' or 'exp' depending on calculation type.
-     * @param {string} des The description of the added list item.
-     * @param {integer} val The value of the added list item.
-     * @return {array} Array of all list items for this particular type.
+    /** Updates the percentages of individual expenses whenever something is added or removed.
      */
     var updatePercentages = function() {
         budgetCtrl.calculatePercentages();
@@ -298,6 +303,8 @@ var UIController = (function() {
         UICtrl.displayPercentages(percentages);
     }
     
+    /** Adds a new list item from the UI input panel. This is attached to the button 'click' event handler and return key event handler.
+     */
     var ctrlAddItem = function() {
         // Grab the inputs from the DOM
         var input = UICtrl.getInput();
@@ -312,6 +319,8 @@ var UIController = (function() {
         }
     };
 
+    /** Deletes a list item defined by itemID. This is attached to the .container class containing all the list items.
+     */
     var ctrlDeleteItem = function(event) {
         var itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
 
