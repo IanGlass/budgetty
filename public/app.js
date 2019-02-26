@@ -26,6 +26,7 @@ var budgetController = (function() {
     };
 
     var data = {
+        // Storage arrays for list items
         allItems: {
             inc: [],
             exp: [],
@@ -39,6 +40,9 @@ var budgetController = (function() {
         percentage: 0,
     }
 
+    /** Closure which calculates the total income or expense.
+     * @param {string} 'inc' or 'exp' depending on calculation type.
+     */
     var calculateTotal = function(type) {
         var sum = 0;
         data.allItems[type].forEach(function(element) {
@@ -48,8 +52,14 @@ var budgetController = (function() {
     }
 
     return {
+        /** Adds new expense or income items to the respective data storage structure.
+         * @param {string} type 'inc' or 'exp' depending on calculation type.
+         * @param {string} des The description of the added list item.
+         * @param {integer} val The value of the added list item.
+         * @return {array} Array of all list items for this particular type.
+         */
         addItem: function(type, des, val) {
-            var id, newItem;
+            var id;
             // Find the next incremental id within the selected allItems array
             (data.allItems[type].length > 0 ? id = data.allItems[type][data.allItems[type].length - 1].id + 1 : id = 0);
 
@@ -61,6 +71,9 @@ var budgetController = (function() {
                 return data.allItems.inc[data.allItems.inc.length - 1];
             }
         },
+        /** Updates all the budget totals data structures. 
+         * @return {object} Object containing the updated totals.
+         */
         calculateBudget: function() {
             calculateTotal('inc');
             calculateTotal('exp');
@@ -81,20 +94,26 @@ var budgetController = (function() {
                 percentage: data.percentage,
             }
         },
-
+        /** Iterates through the expenses list and calculates their respective percentages.
+         */
         calculatePercentages: function() {
             data.allItems.exp.forEach(function(item) {
                 item.calcPercentage(data.totals.inc);
             });
         },
-        
+        /** Collates a list of all the percentages in the expenses list.
+         * @return {array} Array of percentages for the expenses list.
+         */
         getPercentages: function() {
             var allPercentages = data.allItems.exp.map(function(item) {
                 return item.percentage;
             });
             return allPercentages;
         },
-
+        /** Removes an item from the expenses or income list based on its id.
+         * @param {string} type 'inc' or 'exp' depending on calculation type.
+         * @param {string} id The id of the list item to remove.
+         */
         deleteData: function(type, id) {
             // Remove the item from the data obj
             data.allItems[type].map(function(item, index) {
@@ -125,7 +144,8 @@ var UIController = (function() {
         monthLabel: '.budget__title--month',
         inputType: '.add__type'
     }
-
+    /** Finds and adds the current month to the UI.
+     */
     var displayMonth = function() {
         months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         date = new Date();
@@ -133,7 +153,8 @@ var UIController = (function() {
     };
     displayMonth();
 
-    // Clears the input fields after it has been added to the DOM table
+    /** Clears the input fields after inputs have been added to the DOM table.
+     */
     var clearFields = function() {
         var fields, fieldsArr;
         fields = document.querySelectorAll(DOMStrings.inputDescription + ', ' + DOMStrings.inputValue);
@@ -147,7 +168,11 @@ var UIController = (function() {
 
         fieldsArr[0].focus();
     }
-
+    
+    /** Increments through a node list and performs an action on each item.
+     * @param {array} list Array of items upon which to perform an action.
+     * @param {function} callback The function to execute for each item.
+     */
     var nodeListForEach = function(list, callback) {
         for (var i = 0; i < list.length; i++) {
             callback(list[i], i);
@@ -157,6 +182,9 @@ var UIController = (function() {
     return {
         // Expose DOMStrings to calling modules
         DOMStrings: DOMStrings,
+        /** Returns the values entered into the input panel.
+         * @return {object} Object containing the input type, description and value.
+         */
         getInput: function() {
             return {
                 type: document.querySelector(DOMStrings.inputType).value,
@@ -165,6 +193,10 @@ var UIController = (function() {
                 value: parseFloat(document.querySelector(DOMStrings.inputValue).value)
             };
         },
+        /** Adds a new list item to the DOM.
+         * @param {object} obj Object containing the item id, description and value to be displayed.
+         * @param {string} type 'inc' or 'exp' depending on calculation type.
+         */
         addListItem: function(obj, type) {
             var html, newHtml, element;
             if (type === 'exp') {
@@ -183,21 +215,32 @@ var UIController = (function() {
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
             clearFields();
         },
+        /** Adds a new list item to the DOM.
+         * @param {string} id The id of the list item to remove from the DOM
+         */
         deleteListItem: function(id) {
             document.getElementById(id).remove();
         },
+        /** Updates the budget totals on the DOM.
+         * @param {object} obj Object containing the total budget, income, expense and expense percentage.
+         */
         displayBudget: function(obj) {
             document.querySelector(DOMStrings.budgetValue).textContent = obj.budget.toLocaleString('en', { minimumFractionDigits: 2 });
             document.querySelector(DOMStrings.budgetIncome).textContent = '+ ' +  obj.income.toLocaleString('en', { minimumFractionDigits: 2 });
             document.querySelector(DOMStrings.budgetExpenses).textContent = '- ' +  obj.expenses.toLocaleString('en', { minimumFractionDigits: 2 });
             document.querySelector(DOMStrings.budgetExpensesPercentage).textContent = obj.percentage + '%';
         },
+        /** Updates the percentages for each expense list item.
+         * @param {array} percentages A list of all the expense percentages.
+         */
         displayPercentages: function(percentages) {
             var fields = document.querySelectorAll(DOMStrings.expensesPercLabel);
             nodeListForEach(fields, function(current, index) {
                 current.textContent = percentages[index] + '%';
             });
         },
+        /** Toggles the colour of the input UI when the input type is changed. This function is attached to an event listener.
+         */
         changedType: function() {
             var fields = document.querySelectorAll(
                 DOMStrings.inputType +',' +
@@ -217,7 +260,8 @@ var UIController = (function() {
 
  // Global app controller
  var Controller = (function(budgetCtrl, UICtrl) {
-
+    /** Constructs all the event listeners used in this program.
+     */
     var setupEventListeners = function() {
         document.querySelector(UICtrl.DOMStrings.addButton).addEventListener('click', ctrlAddItem);
 
@@ -234,12 +278,20 @@ var UIController = (function() {
     };
 
     // Calculate and update budget
+    /** Triggers the budget controller to calculate the total budgets and triggers the UI controller to update UI with new budgets.
+     */
     var updateBudget = function() {
         var budgetData = budgetCtrl.calculateBudget();
         UICtrl.displayBudget(budgetData);
     }
 
     // Updates the percentages of individual expenses whenever something is added or removed
+    /** Adds new expense or income items to the respective data storage structure.
+     * @param {string} type 'inc' or 'exp' depending on calculation type.
+     * @param {string} des The description of the added list item.
+     * @param {integer} val The value of the added list item.
+     * @return {array} Array of all list items for this particular type.
+     */
     var updatePercentages = function() {
         budgetCtrl.calculatePercentages();
         var percentages = budgetCtrl.getPercentages();
