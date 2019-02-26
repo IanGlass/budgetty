@@ -171,7 +171,7 @@ The ```budget controller``` exposes five public methods which are used by the ``
 * ```calculateBudget``` - Calculates the total income, expense, budget and expense as a percentage of the income and returns these parameters as an object to be used by the ```controller```
 * ```calculatePercentages``` - Uses the total income to calculate the respective percentages of each expense in the item list. This is used by the ```controller``` whenever a list item is added or removed.
 * ```getPercentages``` - Returns a array of all the expense percentages in the item list.
-* ```deleteData``` - Removes a particular list item by id.
+* ```deleteData``` - Removes a particular list item from the data structure by ```id```.
 
 
 ```javascript
@@ -272,7 +272,7 @@ The ```budget controller``` exposes five public methods which are used by the ``
 
 
 #### UI Controller
-The UI controller controls all aspects associated with interacting with the UI, changing or updating displayed values, or reading display values. An object, ```DOMStrings```, is used to store all the important class names of the DOM. the ```displayMonth``` closure is used to update the month displayed on the UI upon startup.
+The UI controller controls all aspects associated with interacting with the UI, changing or updating displayed values, or reading display values. An object, ```DOMStrings```, is used to store all the important class names of the DOM. the ```displayMonth``` closure is used to update the month displayed on the UI upon startup. ```clearFields``` removes the input values on the DOM when the values are read, for convenience. ```nodeListForEach``` is a closure, which allows the ```UIController``` to iterate through a node list and implement a method on every element. It is used by ```displayPercentages``` and ```changedType```.
 ```javascript
 var UIController = (function() {
 
@@ -332,6 +332,16 @@ var UIController = (function() {
 
 
 
+
+
+The ```UIController``` returns 7 objects for use by the ```controller```:
+* ```DOMStrings``` Contains the class names for the DOM.
+* ```getInput``` - Returns the input values when the button or return key is pressed.
+* ```addListItem``` - Adds the argument ```obj``` to the item list on the DOM and formats numbers to be comma separated and fixed to two point precision.
+* ```deleteListItem``` - Removes the particular list item from the DOM by ```id```
+* ```displayBudget``` - Updates the budget totals on the DOM, defined by ```obj```.
+* ```displayPercentages``` - Updates the percentages for each expense list item.
+* ```changedType``` - Toggles the colour of the input UI when the input type is changed. This function is attached to the input type event listener.
 ```javascript
     return {
         // Expose DOMStrings to calling modules
