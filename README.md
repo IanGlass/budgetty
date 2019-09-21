@@ -13,8 +13,8 @@ https://budgetty.herokuapp.com/
 
 This app is written in ES5 using the module pattern where objects are hidden from the global scope using IFFEs. Modules are exposed to other modules by passing them as arguments during the IFFE declaration. Closures are leveraged to create private methods only available in their parent objects.
 
-
-#### HTML
+<details>
+<summary>HTML</summary>
 The board is broken into two main divs, top and bottom, which contain the budget totals, and income and expenses lists respectively. Within top, there are four elements:
 * The title, containing the current month ```budget__title```
 * The total remaining budget ```budget__value```
@@ -59,8 +59,6 @@ The board is broken into two main divs, top and bottom, which contain the budget
             </div>
         </div>
 ```        
-
-
 
 The bottom element is split into two containers. The input container ```add__container```, contains:
 * The input type selector ```add__type```
@@ -114,18 +112,12 @@ However, expense items have an additional element ```item__percentage``` which s
 </html>
 ```
 
+</details>
 
-
-
-
-
-
-
-
-
-
-#### Budget Controller
+<details>
+<summary>Budget Controller</summary>
 The budget controller contains three data storage structures to keep internal record of the current data. Expense and income function constructors provide a means to dynamically expand and contract the current number of list items. These structures contain an id, item description and a value, however the ```Expense``` constructor also contains a prototype function to calculate its percentage and store it internally. Expense and income items are stored within respective arrays in ```data.allItems```, with the total income and expense stored in ```totals``` and the remaining budget and total expense percentage stored in ```data.budget``` and ```data.percentage``` respectively.
+
 ```javascript
 var budgetController = (function() {
 
@@ -265,14 +257,12 @@ The ```budget controller``` exposes five public methods which are used by the ``
 })();
 ```
 
+</details>
 
-
-
-
-
-
-#### UI Controller
+<details>
+<summary>UI Controller</summary>
 The UI controller controls all aspects associated with interacting with the UI, changing or updating displayed values, or reading display values. An object, ```DOMStrings```, is used to store all the important class names of the DOM. the ```displayMonth``` closure is used to update the month displayed on the UI upon startup. ```clearFields``` removes the input values on the DOM when the values are read, for convenience. ```nodeListForEach``` is a closure, which allows the ```UIController``` to iterate through a node list and implement a method on every element. It is used by ```displayPercentages``` and ```changedType```.
+
 ```javascript
 var UIController = (function() {
 
@@ -429,20 +419,16 @@ The ```UIController``` returns 7 objects for use by the ```controller```:
 })();
 ```
 
-
-
-
-
-
-
-
 The ```controller``` is the master controller of the app and co-ordinates communication between the ```budgetController``` and the ```UIController```. The ```controller``` has 5 closures:
 * ```setupEventListeners``` - Constructs the event listeners for the entire program. Attaches the ```ctrlAddItem``` method to the button and return key event listeners.
 * ```updateBudget``` - Calculates the percentages of each expense item in the item list using the ```budgetCtrl.calculatePercentages``` method. Then retrieves the updated percentages as a string and passes it to ```UICtrl.displayPercentages(percentages)``` to update the UI list.
 * ```ctrlAddItem``` - Attached to the button and return key event listener. Grabs the DOM inputs using ```UICtrl.getInput```, ensures the values are not empty or zero, adds the item to the data structure using ```budgetCtrl.addItem```, adds the item to the DOM list using ```UICtrl.addListItem``` and updates the budget and expense list percentages.
 * ```ctrlDeleteItem``` - Attached to the ```container``` 'click' event listener. This method removes the list item that was clicked by deleting the list item from the data structure using ```budgetController.deleteData```, updates the total budgets using ```updateBudget```, removes the list item from the DOM using ```UIController.deleteListItem``` and updates the percentages of individual expenses in the item list using ```updatePercentages```.
 
-#### App controller
+</details>
+
+<details>
+<summary>App controller</summary>
 
 ```javascript
 // Global app controller
@@ -520,3 +506,5 @@ The ```controller``` is the master controller of the app and co-ordinates commun
 // Initialise the main controller
 Controller.init()
 ```
+
+</details>
