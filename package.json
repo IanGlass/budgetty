@@ -5,7 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "heroku": "^7.21.0",
     "ionicons": "^4.5.5"
   },
